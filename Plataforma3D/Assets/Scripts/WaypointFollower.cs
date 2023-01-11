@@ -10,7 +10,19 @@ public class WaypointFollower : MonoBehaviour
     
     void Update()
     {
+        //checar qual waypoint temos que usar 
+        //checa quao longe estamos do current waypoint 
+        //se tocamos trocamos para o proximo
+        if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].transform.position) < .1f){
+            currentWaypointIndex++;
+            if(currentWaypointIndex >= waypoints.Length){
+                //checar se esta no ultimo waypoint
+                currentWaypointIndex = 0;
+            }
+        }
         //posicao do opbjeto que possui o script
-        transform.position
+        //Move Towards calcula uma nova posicao 
+        transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speed * Time.deltaTime);
+
     }
 }
