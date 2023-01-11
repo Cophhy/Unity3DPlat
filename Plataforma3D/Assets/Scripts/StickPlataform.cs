@@ -19,5 +19,4 @@ public class StickPlataform : MonoBehaviour
             collision.gameObject.transform.SetParent(null);
         }
     }
-
 }

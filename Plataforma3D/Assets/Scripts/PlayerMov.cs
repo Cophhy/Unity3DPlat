@@ -26,7 +26,19 @@ public class PlayerMov : MonoBehaviour
         rb.velocity = new Vector3(horizontalInput * movSpeed, rb.velocity.y, verticalInput * movSpeed);
         
         if(Input.GetButton("Jump") && IsGrounded()){
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            Jump();
+        }
+    }
+
+    private void Jump(){
+         rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+    }
+    
+    private void OnCollisionEnter(Collision collision){
+        if(collision.gameObject.CompareTag("EnemyHead")){
+            //destroi os parentes do objeto tmb nao so a box d cima
+            Destroy(collision.transform.parent.gameObject);
+            Jump();
         }
     }
 
