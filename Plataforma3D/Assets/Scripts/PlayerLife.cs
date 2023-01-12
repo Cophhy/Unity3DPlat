@@ -5,9 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    bool dead = false;
+
+    private void Update(){
+        if(transform.position.y <-1f && !dead ){
+            Die();
+        }
+    }
     private void OnCollisionEnter(Collision collision){
         //compara tag criada do objeto 
         if(collision.gameObject.CompareTag("EnemyBody")){
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<PlayerMov>().enabled = false;
             Die();
         }
 
@@ -15,10 +25,8 @@ public class PlayerLife : MonoBehaviour
 
     private void Die(){
         //desativamos ao inves de destruir o player para manter o ui de health
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<PlayerMov>().enabled = false;
 
+        dead = true;
         Invoke(nameof(ReloadLevel), .7f);
     }
 
