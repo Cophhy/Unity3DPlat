@@ -9,6 +9,8 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] float jumpForce = 5f;
     [SerializeField] Transform groundCheck; 
     [SerializeField] LayerMask ground;
+
+    [SerializeField] AudioSource jumpSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,7 @@ public class PlayerMov : MonoBehaviour
 
     private void Jump(){
          rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+         jumpSound.Play();
     }
     
     private void OnCollisionEnter(Collision collision){
