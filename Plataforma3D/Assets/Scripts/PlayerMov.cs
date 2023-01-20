@@ -6,6 +6,7 @@ public class PlayerMov : MonoBehaviour
 {
     Rigidbody rb;
     public float movSpeed = 5f;
+    public float bounce = 9f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] Transform groundCheck; 
     [SerializeField] LayerMask ground;
@@ -42,6 +43,10 @@ public class PlayerMov : MonoBehaviour
             //destroi os parentes do objeto tmb nao so a box d cima
             Destroy(collision.transform.parent.gameObject);
             Jump();
+        }
+        if(collision.gameObject.CompareTag("Trampoline")){
+            rb.velocity = new Vector3(rb.velocity.x, bounce, rb.velocity.z);
+         jumpSound.Play();
         }
     }
 
