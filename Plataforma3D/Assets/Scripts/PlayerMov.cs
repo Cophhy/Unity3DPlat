@@ -10,6 +10,7 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] float jumpForce = 5f;
     [SerializeField] Transform groundCheck; 
     [SerializeField] LayerMask ground;
+    public Animator animator;
 
     [SerializeField] AudioSource jumpSound;
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class PlayerMov : MonoBehaviour
     {
         //pegando o componente Rigidbody para fazer o objeto se mover
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,15 +29,26 @@ public class PlayerMov : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         //bom para joystic para slower mov
         rb.velocity = new Vector3(horizontalInput * movSpeed, rb.velocity.y, verticalInput * movSpeed);
-        
+       
+       if(verticalInput>0.01){
+             animator.SetFloat("verticalInput", verticalInput);
+        }
+
+        if(horizontalInput>0.01){
+             animator.SetBool("horizontalInput", true);
+        }
+
         if(Input.GetButton("Jump") && IsGrounded()){
             Jump();
-        }
+        }else{
+            animator.SetBool("JumpAnim", false);
+        }        
     }
 
     private void Jump(){
          rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
          jumpSound.Play();
+         animator.SetBool("JumpAnim", true);
     }
     
     private void OnCollisionEnter(Collision collision){
@@ -50,6 +63,7 @@ public class PlayerMov : MonoBehaviour
         }
     }
 
+   
     //metodo para saber se o personagem esta tocando o chao
     bool IsGrounded(){
         //criar uma esfera para saber se esta tocando o chao ou se tem algo dentro da area
