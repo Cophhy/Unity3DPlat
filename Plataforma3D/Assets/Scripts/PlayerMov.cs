@@ -29,15 +29,9 @@ public class PlayerMov : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         //bom para joystic para slower mov
         rb.velocity = new Vector3(horizontalInput * movSpeed, rb.velocity.y, verticalInput * movSpeed);
-       
-       if(verticalInput>0.01){
-             animator.SetFloat("verticalInput", verticalInput);
-        }
-
-        if(horizontalInput>0.01){
-             animator.SetBool("horizontalInput", true);
-        }
-
+        animator.SetFloat("verticalInput", verticalInput);
+        animator.SetFloat("horizontalInput", horizontalInput);
+        
         if(Input.GetButton("Jump") && IsGrounded()){
             Jump();
         }else{
@@ -63,6 +57,7 @@ public class PlayerMov : MonoBehaviour
         }
     }
 
+    
    
     //metodo para saber se o personagem esta tocando o chao
     bool IsGrounded(){

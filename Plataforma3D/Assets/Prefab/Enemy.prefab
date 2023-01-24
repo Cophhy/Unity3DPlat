@@ -115,6 +115,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   speed: 2
+  animator: {fileID: 0}
 --- !u!1 &963651355403888390
 GameObject:
   m_ObjectHideFlags: 0

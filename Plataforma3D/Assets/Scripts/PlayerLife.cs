@@ -7,11 +7,13 @@ public class PlayerLife : MonoBehaviour
 {
     bool dead = false;
     [SerializeField] AudioSource deadSound;
+    public Animator animator;
 
 
     private void Update(){
         if(transform.position.y <-1f && !dead ){
             Die();
+            animator.SetBool("Dead", true);
         }
     }
     private void OnCollisionEnter(Collision collision){
@@ -20,6 +22,7 @@ public class PlayerLife : MonoBehaviour
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<PlayerMov>().enabled = false;
+            animator.SetBool("Dead", true);
             Die();
         }
 
@@ -27,7 +30,7 @@ public class PlayerLife : MonoBehaviour
 
     private void Die(){
         //desativamos ao inves de destruir o player para manter o ui de health
-
+        
         dead = true;
         Invoke(nameof(ReloadLevel), .7f);
         deadSound.Play();
